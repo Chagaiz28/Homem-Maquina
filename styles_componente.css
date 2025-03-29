@@ -1,0 +1,59 @@
+:root {
+    --background-color: #caf0f8;
+  }
+  .theme-dark {
+    --background-color: #999;
+    --font-family: 'Arimo', sans-serif;
+    --color-text: #ggg; 
+  }
+  
+  .comp-aula {
+    margin-bottom: 16px;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #caf0f8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .titulo_aula {
+    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+  
+  .p {
+    font-size: 13px;
+    color: #000000;
+  }
+  
+  .lables {
+    display: flex;
+  }
+  
+  .lable-prova,
+  .lable-frequencia,
+  .lable-nota {
+    background-color: var(--prova);
+    padding: 7px 15px;
+    margin-bottom: 10px;
+    border-radius: 500px;
+    text-align: center;
+    margin-right: 10px;
+  }
+  
+  .lable-frequencia {
+    background-color: var(--frequencia);
+  }
+  
+  .lable-nota {
+    background-color: var(--nota);
+  }
+  
+  .p_lable {
+    font-size: 13px;
+    color: rgb(0, 0, 0);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
