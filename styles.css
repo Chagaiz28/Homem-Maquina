@@ -11,18 +11,20 @@
   --color-mensagens: #90e0ef;
   --color-main: #caf0f8;
   --color-noticias: #ade8f4;
-  --font-family: 'Arimo', sans-serif;
-  --color-text: #000; 
+  --font-family: "Arimo", sans-serif;
+  --color-text: #000;
+  --color-icon: #000;
 }
 
 /* TEMA DARK */
 .theme-dark {
   --color-header: #333;
-  --color-mensagens: #555;
+  --color-mensagens: #ffffff;
   --color-main: #777;
   --color-noticias: #999;
-  --font-family: 'Arimo', sans-serif;
-  --color-text: #ggg; 
+  --font-family: "Arimo", sans-serif;
+  --color-text: rgb(0, 0, 0);
+  --color-icon: rgb(255, 255, 255);
 }
 
 body {
@@ -56,6 +58,7 @@ body {
 /* MENSAGENS */
 .mensagens {
   background: var(--color-mensagens);
+  color: var(--color-text);
   padding: 16px;
 }
 
@@ -80,7 +83,7 @@ body {
 }
 
 .card-noticia {
-  background: white;
+  background: var(--color-noticias);
   padding: 16px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -90,7 +93,7 @@ body {
 h3 {
   font-family: "Arimo", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 700; 
+  font-weight: 700;
   font-style: normal;
   font-size: 14px;
   color: var(--color-text);
@@ -100,7 +103,7 @@ h3 {
 p {
   font-family: "Arimo", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 400; 
+  font-weight: 400;
   font-style: normal;
   font-size: 11px;
   color: var(--color-text);
@@ -116,6 +119,7 @@ p {
   width: 18px;
   display: inline-block;
   vertical-align: middle;
+  color: var(--color-icon);
 }
 
 /* CARROSSEL */
@@ -164,8 +168,12 @@ button {
 }
 
 /* Ajuste de posição dos botões */
-#prevBtn { left: 10px; }
-#nextBtn { right: 10px; }
+#prevBtn {
+  left: 10px;
+}
+#nextBtn {
+  right: 10px;
+}
 
 /* MENU DE TEMAS */
 .theme-menu {
@@ -181,12 +189,16 @@ button {
 
 .theme-menu button {
   position: static;
-  transform: none; 
+  transform: none;
   background: none;
-  color: #333;  
-  border: 1px solid #ccc;  
-  padding: 5px 10px; 
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
   margin-bottom: 5px;
+}
+
+.svg_logo_inatel {
+  fill: var(--color-icon);
 }
 
 /* RESPONSIVIDADE */
