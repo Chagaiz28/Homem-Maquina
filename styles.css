@@ -1,11 +1,4 @@
-/* RESET BÁSICO */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* TEMA PADRÃO (Inatel) */
+/* ========== TEMA PADRÃO (Inatel) ========== */
 :root {
   --color-header: #0077b6;
   --color-mensagens: #90e0ef;
@@ -14,17 +7,22 @@
   --font-family: "Arimo", sans-serif;
   --color-text: #000;
   --color-icon: #000;
+  --color-primary: #0077cc;
+  --color-white: #fff;
+  --color-gray: #555;
+  --shadow-default: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --border-radius-default: 8px;
 }
 
-/* TEMA DARK */
+/* ========== TEMA DARK ========== */
 .theme-dark {
   --color-header: #333;
   --color-mensagens: #ffffff;
   --color-main: #777;
   --color-noticias: #999;
-  --font-family: "Arimo", sans-serif;
   --color-text: rgb(0, 0, 0);
   --color-icon: rgb(255, 255, 255);
+  --color-background: #999;
 }
 
 body {
@@ -33,6 +31,7 @@ body {
   display: flex;
   justify-content: center;
   font-family: var(--font-family);
+  color: var(--color-text);
 }
 
 /* CONTAINER GERAL */
@@ -45,165 +44,156 @@ body {
   overflow: hidden;
 }
 
-/* HEADER */
+/* ========== HEADER ========== */
 .header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 16px;
-  background: var(--color-header);
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 60px;
+  background-color: var(--color-header);
   color: white;
 }
 
-/* MENSAGENS */
-.mensagens {
-  background: var(--color-mensagens);
-  color: var(--color-text);
-  padding: 16px;
+.header .logo {
+  display: flex;
+  align-items: center;
 }
 
-/* MAIN - AULAS */
-.main {
-  padding: 16px;
-  background: var(--color-main);
-}
-
-.aula {
-  background: white;
-  margin-bottom: 8px;
-  padding: 16px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* NOTÍCIAS */
-.noticias {
-  background: var(--color-noticias);
-  padding: 16px;
-}
-
-.card-noticia {
-  background: var(--color-noticias);
-  padding: 16px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* TIPOGRAFIA */
-h3 {
-  font-family: "Arimo", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 700;
-  font-style: normal;
-  font-size: 14px;
-  color: var(--color-text);
-  margin-bottom: 4px;
-}
-
-p {
-  font-family: "Arimo", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 11px;
-  color: var(--color-text);
-  line-height: 1.4;
-  margin-bottom: 8px;
-}
-
-/* ÍCONE */
-.icon {
-  font-size: 15px;
-  margin-left: 5px;
-  margin-right: 2px;
-  width: 18px;
-  display: inline-block;
-  vertical-align: middle;
+.header .material-icons-outlined.icon {
+  cursor: pointer;
+  margin-left: 16px;
   color: var(--color-icon);
 }
 
-/* CARROSSEL */
-.carousel-container {
-  position: relative;
-  overflow: hidden; /* Importante para cortar o que sai da área */
-  background-color: white;
-  border-radius: 10px;
-  margin: 20px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+#vagasBtn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  margin-left: 16px;
 }
 
-.carousel {
-  display: flex; /* ERRATA DO PROFESSOR */
-  transition: transform 0.5s ease-in-out; /* ERRATA DO PROFESSOR */
+/* ========== AULAS COMPONENT ========== */
+.comp-aula {
+  margin-bottom: 16px;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius-default);
+  background-color: var(--color-main);
+  box-shadow: var(--shadow-default);
 }
 
-.card {
-  flex: 0 0 100%; /* Cada card ocupa 100% da largura do container */
+.titulo_aula {
+  font-weight: bold;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.p_lable {
+  font-size: 13px;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lables {
+  display: flex;
+  gap: 10px;
+}
+
+.lable-prova,
+.lable-frequencia,
+.lable-nota {
+  background-color: var(--color-main);
+  padding: 7px 15px;
+  border-radius: 500px;
   text-align: center;
 }
 
-/* IMAGEM DENTRO DO CARD */
-.card img {
-  width: 100%;
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
+.lable-frequencia { background-color: var(--frequencia); }
+.lable-nota { background-color: var(--nota); }
+
+/* ========== VAGAS ========== */
+#vagas-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
 }
 
-.info {
-  padding: 10px;
+.vagas-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  padding: 16px;
 }
 
-/* BOTÕES DO CARROSSEL */
-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  font-size: 14px;
+.vagas-filtros input,
+.vagas-filtros select {
+  padding: 8px;
   border-radius: 4px;
+  border: 1px solid #ccc;
 }
 
-/* Ajuste de posição dos botões */
-#prevBtn {
-  left: 10px;
-}
-#nextBtn {
-  right: 10px;
+.vaga-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius-default);
+  padding: 16px;
+  box-shadow: var(--shadow-default);
 }
 
-/* MENU DE TEMAS */
+.vaga-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vaga-titulo {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.vaga-empresa,
+.vaga-tipo {
+  font-size: 14px;
+  color: var(--color-gray);
+}
+
+.vaga-botao {
+  padding: 8px 12px;
+  border: none;
+  background-color: var(--color-primary);
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* ========== TEMA ========== */
 .theme-menu {
   position: fixed;
-  top: 70px;
-  right: 200px;
-  background: white;
-  border: 1px solid #ccc;
+  bottom: 10px;
+  right: 10px;
+  background-color: white;
+  border-radius: var(--border-radius-default);
+  box-shadow: var(--shadow-default);
   padding: 10px;
   display: none;
-  z-index: 1000;
 }
 
 .theme-menu button {
-  position: static;
-  transform: none;
+  display: block;
+  width: 100%;
   background: none;
-  color: #333;
-  border: 1px solid #ccc;
-  padding: 5px 10px;
-  margin-bottom: 5px;
-}
-
-.svg_logo_inatel {
-  fill: var(--color-icon);
-}
-
-/* RESPONSIVIDADE */
-@media (max-width: 600px) {
-  .container {
-    width: 100%;
-  }
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  font-family: var(--font-family);
 }
