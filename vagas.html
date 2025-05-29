@@ -15,31 +15,140 @@
     <link rel="stylesheet" href="styles.css" />
     <script src="script.js" defer></script>
     <script>
+      let vagasOriginais = [];
+      let vagasFiltradas = [];
       async function carregarVagas() {
         const container = document.getElementById("vagas-lista");
         try {
           const response = await fetch("vagas.json");
           const vagas = await response.json();
-          container.innerHTML = vagas
-            .map(
-              (vaga) => `
+          vagasOriginais = vagas;
+          vagasFiltradas = vagas;
+          preencherFiltros(vagas);
+          renderizarVagas(vagas);
+        } catch (e) {
+          container.innerHTML = "<p>Erro ao carregar vagas.</p>";
+        }
+      }
+
+      function preencherFiltros(vagas) {
+        // Preenche os selects de tipo e curso
+        const tipoSelect = document.querySelectorAll('.vagas-filtros select')[0];
+        const cursoSelect = document.querySelectorAll('.vagas-filtros select')[1];
+        tipoSelect.innerHTML = '<option value="">Tipo</option>' + [...new Set(vagas.map(v => v.tipo))].map(tipo => `<option value="${tipo}">${tipo}</option>`).join("");
+        cursoSelect.innerHTML = '<option value="">Curso</option>' + [...new Set(vagas.map(v => v.curso))].map(curso => `<option value="${curso}">${curso}</option>`).join("");
+      }
+
+      function renderizarVagas(vagas) {
+        const container = document.getElementById("vagas-lista");
+        if (!vagas.length) {
+          container.innerHTML = '<p>Nenhuma vaga encontrada.</p>';
+          return;
+        }
+        container.innerHTML = vagas
+          .map(
+            (vaga, idx) => `
       <div class="vaga-card">
         <div class="vaga-info">
           <div class="vaga-titulo">${vaga.titulo}</div>
           <div class="vaga-empresa">${vaga.empresa}</div>
           <div class="vaga-tipo">${vaga.tipo}</div>
         </div>
-        <button class="vaga-botao" onclick="alert('Descrição: ${vaga.descricao}\nRequisitos: ${vaga.requisitos}')">Ver detalhes</button>
+        <button class="vaga-botao" onclick="abrirModalDetalhes(${idx})">Ver detalhes</button>
       </div>
     `
-            )
-            .join("");
-        } catch (e) {
-          container.innerHTML = "<p>Erro ao carregar vagas.</p>";
-        }
+          )
+          .join("");
       }
-      document.addEventListener("DOMContentLoaded", carregarVagas);
+
+      function aplicarFiltros() {
+        const busca = document.querySelector('.vagas-filtros input').value.toLowerCase();
+        const tipo = document.querySelectorAll('.vagas-filtros select')[0].value;
+        const curso = document.querySelectorAll('.vagas-filtros select')[1].value;
+        vagasFiltradas = vagasOriginais.filter(vaga => {
+          const buscaOk = vaga.titulo.toLowerCase().includes(busca) || vaga.empresa.toLowerCase().includes(busca);
+          const tipoOk = !tipo || vaga.tipo === tipo;
+          const cursoOk = !curso || vaga.curso === curso;
+          return buscaOk && tipoOk && cursoOk;
+        });
+        renderizarVagas(vagasFiltradas);
+      }
+
+      // Modal de detalhes
+      function abrirModalDetalhes(idx) {
+        const vaga = vagasFiltradas[idx];
+        let modal = document.getElementById('modalDetalhes');
+        if (!modal) {
+          modal = document.createElement('div');
+          modal.id = 'modalDetalhes';
+          modal.innerHTML = `
+            <div class="modal-bg"></div>
+            <div class="modal-content">
+              <button class="modal-close" onclick="fecharModalDetalhes()">&times;</button>
+              <h3 id="modalTitulo"></h3>
+              <p><b>Empresa:</b> <span id="modalEmpresa"></span></p>
+              <p><b>Tipo:</b> <span id="modalTipo"></span></p>
+              <p><b>Curso:</b> <span id="modalCurso"></span></p>
+              <p><b>Descrição:</b> <span id="modalDescricao"></span></p>
+              <p><b>Requisitos:</b> <span id="modalRequisitos"></span></p>
+            </div>
+          `;
+          document.body.appendChild(modal);
+        }
+        document.getElementById('modalTitulo').innerText = vaga.titulo;
+        document.getElementById('modalEmpresa').innerText = vaga.empresa;
+        document.getElementById('modalTipo').innerText = vaga.tipo;
+        document.getElementById('modalCurso').innerText = vaga.curso;
+        document.getElementById('modalDescricao').innerText = vaga.descricao;
+        document.getElementById('modalRequisitos').innerText = vaga.requisitos;
+        modal.style.display = 'flex';
+      }
+      function fecharModalDetalhes() {
+        const modal = document.getElementById('modalDetalhes');
+        if (modal) modal.style.display = 'none';
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        carregarVagas();
+        // Filtros
+        document.querySelector('.vagas-filtros input').addEventListener('input', aplicarFiltros);
+        document.querySelectorAll('.vagas-filtros select')[0].addEventListener('change', aplicarFiltros);
+        document.querySelectorAll('.vagas-filtros select')[1].addEventListener('change', aplicarFiltros);
+      });
     </script>
+    <style>
+      #modalDetalhes {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+      #modalDetalhes .modal-bg {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.5);
+      }
+      #modalDetalhes .modal-content {
+        position: relative;
+        background: #fff;
+        border-radius: 8px;
+        padding: 24px 20px 16px 20px;
+        min-width: 280px;
+        max-width: 90vw;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        z-index: 2;
+      }
+      #modalDetalhes .modal-close {
+        position: absolute;
+        top: 8px; right: 8px;
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
@@ -82,11 +191,6 @@
             <option>Tipo</option>
             <option>Estágio</option>
             <option>Emprego</option>
-          </select>
-          <select>
-            <option>Empresa</option>
-            <option>Inatel</option>
-            <option>Outra</option>
           </select>
           <select>
             <option>Curso</option>
