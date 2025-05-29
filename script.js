@@ -61,16 +61,16 @@ function loadEvents() {
     const card = document.createElement("div");
     card.className = "card";
     card.innerHTML = `
-        <img src="${event.image}" alt="${event.title}">
-        <div class="info">
-          <h3>${event.title}</h3>
-          <p>${event.description}</p>
-          <p>
-            <span class="material-icons-outlined icon">event</span> ${event.date} às ${event.time}
-            <span class="material-icons-outlined icon">pin_drop</span> ${event.location}
-          </p>
-        </div>
-      `;
+      <img src="${event.image}" alt="${event.title}">
+      <div class="info">
+        <h3>${event.title}</h3>
+        <p>${event.description}</p>
+        <p>
+          <span class="material-icons-outlined icon">event</span> ${event.date} às ${event.time}
+          <span class="material-icons-outlined icon">pin_drop</span> ${event.location}
+        </p>
+      </div>
+    `;
     carousel.appendChild(card);
   });
 }
