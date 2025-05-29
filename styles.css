@@ -1,13 +1,13 @@
 /* ========== TEMA PADRÃO (Inatel) ========== */
 :root {
-  --color-header: #0077b6;
-  --color-mensagens: #90e0ef;
+  --color-header: #065CBE;
+  --color-mensagens: #b2d6ff;
   --color-main: #caf0f8;
   --color-noticias: #ade8f4;
   --font-family: "Arimo", sans-serif;
   --color-text: #000;
-  --color-icon: #000;
-  --color-primary: #0077cc;
+  --color-icon: #ffffff;
+  --color-primary: #065CBE;
   --color-white: #fff;
   --color-gray: #555;
   --shadow-default: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -18,8 +18,8 @@
 .theme-dark {
   --color-header: #333;
   --color-mensagens: #ffffff;
-  --color-main: #777;
-  --color-noticias: #999;
+  --color-main: #a8a8a8;
+  --color-noticias: #bbbbbb;
   --color-text: rgb(0, 0, 0);
   --color-icon: rgb(255, 255, 255);
   --color-background: #999;
@@ -32,6 +32,9 @@ body {
   justify-content: center;
   font-family: var(--font-family);
   color: var(--color-text);
+}
+.mensagens p{
+  margin-left: 10px;
 }
 
 /* CONTAINER GERAL */
@@ -68,6 +71,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  fill: #ffffff;
 }
 
 .header .material-icons-outlined.icon {
@@ -192,14 +196,15 @@ body {
 
 /* ========== TEMA ========== */
 .theme-menu {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
+  position: absolute;
+  top: 60px; /* logo abaixo do header */
+  right: 700px; /* alinhado ao botão de configurações */
   background-color: white;
   border-radius: var(--border-radius-default);
   box-shadow: var(--shadow-default);
   padding: 10px;
   display: none;
+  z-index: 1000;
 }
 
 .theme-menu button {
