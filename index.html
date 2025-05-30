@@ -28,13 +28,13 @@
       <!-- HEADER -->
       <header class="header">
         <div class="header-side">
-          
-          <span class="material-icons-outlined icon" onclick="navegarComAnimacao('vagas.html')">
+          <span
+            class="material-icons-outlined icon"
+            onclick="navegarComAnimacao('vagas.html')"
+          >
             work
           </span>
         </div>
-
-        <!-- Logo Inatel (SVG) -->
         <div class="logo">
           <svg
             class="svg_logo_inatel"
@@ -49,12 +49,18 @@
             ></path>
           </svg>
         </div>
-
         <div class="header-side">
-          <!-- Botão de configurações (para trocar tema) -->
-          <span class="material-icons-outlined icon" onclick="toggleThemeMenu()"
-            >settings</span
-          >
+          <div class="theme-menu-container">
+            <span
+              class="material-icons-outlined icon"
+              onclick="toggleThemeMenu()"
+              >settings</span
+            >
+            <div class="theme-menu" id="themeMenu">
+              <button onclick="changeTheme('default')">Tema Inatel</button>
+              <button onclick="changeTheme('dark')">Tema Dark</button>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -81,12 +87,6 @@
         <button id="prevBtn">❮</button>
         <button id="nextBtn">❯</button>
       </section>
-    </div>
-
-    <!-- MENU DE TEMAS (oculto por padrão) -->
-    <div class="theme-menu" id="themeMenu">
-      <button onclick="changeTheme('default')">Tema Inatel</button>
-      <button onclick="changeTheme('dark')">Tema Dark</button>
     </div>
   </body>
 </html>

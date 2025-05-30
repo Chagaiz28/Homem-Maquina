@@ -33,16 +33,28 @@
 
       function preencherFiltros(vagas) {
         // Preenche os selects de tipo e empresa
-        const tipoSelect = document.querySelectorAll('.vagas-filtros select')[0];
-        const empresaSelect = document.querySelectorAll('.vagas-filtros select')[1];
-        tipoSelect.innerHTML = '<option value="">Tipo</option>' + [...new Set(vagas.map(v => v.tipo))].map(tipo => `<option value="${tipo}">${tipo}</option>`).join("");
-        empresaSelect.innerHTML = '<option value="">Empresa</option>' + [...new Set(vagas.map(v => v.empresa))].map(empresa => `<option value="${empresa}">${empresa}</option>`).join("");
+        const tipoSelect = document.querySelectorAll(
+          ".vagas-filtros select"
+        )[0];
+        const empresaSelect = document.querySelectorAll(
+          ".vagas-filtros select"
+        )[1];
+        tipoSelect.innerHTML =
+          '<option value="">Tipo</option>' +
+          [...new Set(vagas.map((v) => v.tipo))]
+            .map((tipo) => `<option value="${tipo}">${tipo}</option>`)
+            .join("");
+        empresaSelect.innerHTML =
+          '<option value="">Empresa</option>' +
+          [...new Set(vagas.map((v) => v.empresa))]
+            .map((empresa) => `<option value="${empresa}">${empresa}</option>`)
+            .join("");
       }
 
       function renderizarVagas(vagas) {
         const container = document.getElementById("vagas-lista");
         if (!vagas.length) {
-          container.innerHTML = '<p>Nenhuma vaga encontrada.</p>';
+          container.innerHTML = "<p>Nenhuma vaga encontrada.</p>";
           return;
         }
         container.innerHTML = vagas
@@ -68,11 +80,17 @@
       }
 
       function aplicarFiltros() {
-        const busca = document.querySelector('.vagas-filtros input').value.toLowerCase();
-        const tipo = document.querySelectorAll('.vagas-filtros select')[0].value;
-        const empresa = document.querySelectorAll('.vagas-filtros select')[1].value;
-        vagasFiltradas = vagasOriginais.filter(vaga => {
-          const buscaOk = vaga.titulo.toLowerCase().includes(busca) || vaga.empresa.toLowerCase().includes(busca);
+        const busca = document
+          .querySelector(".vagas-filtros input")
+          .value.toLowerCase();
+        const tipo = document.querySelectorAll(".vagas-filtros select")[0]
+          .value;
+        const empresa = document.querySelectorAll(".vagas-filtros select")[1]
+          .value;
+        vagasFiltradas = vagasOriginais.filter((vaga) => {
+          const buscaOk =
+            vaga.titulo.toLowerCase().includes(busca) ||
+            vaga.empresa.toLowerCase().includes(busca);
           const tipoOk = !tipo || vaga.tipo === tipo;
           const empresaOk = !empresa || vaga.empresa === empresa;
           return buscaOk && tipoOk && empresaOk;
@@ -83,10 +101,10 @@
       // Modal de detalhes
       function abrirModalDetalhes(idx) {
         const vaga = vagasFiltradas[idx];
-        let modal = document.getElementById('modalDetalhes');
+        let modal = document.getElementById("modalDetalhes");
         if (!modal) {
-          modal = document.createElement('div');
-          modal.id = 'modalDetalhes';
+          modal = document.createElement("div");
+          modal.id = "modalDetalhes";
           modal.innerHTML = `
             <div class="modal-bg"></div>
             <div class="modal-content">
@@ -101,25 +119,31 @@
           `;
           document.body.appendChild(modal);
         }
-        document.getElementById('modalTitulo').innerText = vaga.titulo;
-        document.getElementById('modalEmpresa').innerText = vaga.empresa;
-        document.getElementById('modalTipo').innerText = vaga.tipo;
-        document.getElementById('modalCurso').innerText = vaga.curso;
-        document.getElementById('modalDescricao').innerText = vaga.descricao;
-        document.getElementById('modalRequisitos').innerText = vaga.requisitos;
-        modal.style.display = 'flex';
+        document.getElementById("modalTitulo").innerText = vaga.titulo;
+        document.getElementById("modalEmpresa").innerText = vaga.empresa;
+        document.getElementById("modalTipo").innerText = vaga.tipo;
+        document.getElementById("modalCurso").innerText = vaga.curso;
+        document.getElementById("modalDescricao").innerText = vaga.descricao;
+        document.getElementById("modalRequisitos").innerText = vaga.requisitos;
+        modal.style.display = "flex";
       }
       function fecharModalDetalhes() {
-        const modal = document.getElementById('modalDetalhes');
-        if (modal) modal.style.display = 'none';
+        const modal = document.getElementById("modalDetalhes");
+        if (modal) modal.style.display = "none";
       }
 
       document.addEventListener("DOMContentLoaded", () => {
         carregarVagas();
         // Filtros
-        document.querySelector('.vagas-filtros input').addEventListener('input', aplicarFiltros);
-        document.querySelectorAll('.vagas-filtros select')[0].addEventListener('change', aplicarFiltros);
-        document.querySelectorAll('.vagas-filtros select')[1].addEventListener('change', aplicarFiltros);
+        document
+          .querySelector(".vagas-filtros input")
+          .addEventListener("input", aplicarFiltros);
+        document
+          .querySelectorAll(".vagas-filtros select")[0]
+          .addEventListener("change", aplicarFiltros);
+        document
+          .querySelectorAll(".vagas-filtros select")[1]
+          .addEventListener("change", aplicarFiltros);
         // Aplica o tema salvo ao carregar a página de vagas
         const savedTheme = localStorage.getItem("selectedTheme");
         const container = document.querySelector(".container");
@@ -129,14 +153,19 @@
           container.classList.remove("theme-dark");
         }
         document.dispatchEvent(
-          new CustomEvent("themeChanged", { detail: { theme: savedTheme || "default" } })
+          new CustomEvent("themeChanged", {
+            detail: { theme: savedTheme || "default" },
+          })
         );
       });
     </script>
     <style>
       #modalDetalhes {
         position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
         display: none;
         align-items: center;
         justify-content: center;
@@ -144,8 +173,11 @@
       }
       #modalDetalhes .modal-bg {
         position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(0,0,0,0.5);
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
       }
       #modalDetalhes .modal-content {
         position: relative;
@@ -154,12 +186,13 @@
         padding: 24px 20px 16px 20px;
         min-width: 280px;
         max-width: 90vw;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
         z-index: 2;
       }
       #modalDetalhes .modal-close {
         position: absolute;
-        top: 8px; right: 8px;
+        top: 8px;
+        right: 8px;
         background: none;
         border: none;
         font-size: 24px;
@@ -195,9 +228,17 @@
           </svg>
         </div>
         <div class="header-side">
-          <span class="material-icons-outlined icon" onclick="toggleThemeMenu()"
-            >settings</span
-          >
+          <div class="theme-menu-container">
+            <span
+              class="material-icons-outlined icon"
+              onclick="toggleThemeMenu()"
+              >settings</span
+            >
+            <div class="theme-menu" id="themeMenu">
+              <button onclick="changeTheme('default')">Tema Inatel</button>
+              <button onclick="changeTheme('dark')">Tema Dark</button>
+            </div>
+          </div>
         </div>
       </header>
       <main class="main">
@@ -209,10 +250,6 @@
         </div>
         <div id="vagas-lista"></div>
       </main>
-    </div>
-    <div class="theme-menu" id="themeMenu">
-      <button onclick="changeTheme('default')">Tema Inatel</button>
-      <button onclick="changeTheme('dark')">Tema Dark</button>
     </div>
   </body>
 </html>
