@@ -1,28 +1,31 @@
 /* ========== TEMA PADRÃO (Inatel) ========== */
 :root {
-  --color-header: #065CBE;
+  --color-header: #065cbe;
   --color-mensagens: #b2d6ff;
   --color-main: #caf0f8;
   --color-noticias: #ade8f4;
   --font-family: "Arimo", sans-serif;
   --color-text: #000;
   --color-icon: #ffffff;
-  --color-primary: #065CBE;
+  --color-primary: #065cbe;
   --color-white: #fff;
   --color-gray: #555;
   --shadow-default: 0 2px 4px rgba(0, 0, 0, 0.1);
   --border-radius-default: 8px;
+  --color-background: #ffffff;
+  --color: #000;
 }
 
 /* ========== TEMA DARK ========== */
 .theme-dark {
-  --color-header: #333;
+  --color-header: #000000;
   --color-mensagens: #ffffff;
   --color-main: #a8a8a8;
   --color-noticias: #bbbbbb;
   --color-text: rgb(0, 0, 0);
   --color-icon: rgb(255, 255, 255);
-  --color-background: #999;
+  --color-background: #464646;
+  --color: #ffffff;
 }
 
 body {
@@ -33,21 +36,22 @@ body {
   font-family: var(--font-family);
   color: var(--color-text);
   min-height: 100vh;
-  transition: background 0.2s, opacity 0.5s cubic-bezier(.4,1.4,.6,1);
+  transition: background 0.2s, opacity 1s ease;
   opacity: 1;
 }
 body.fade-out {
   opacity: 0;
 }
-.mensagens p{
+.mensagens p {
   margin-left: 10px;
+  color: var(--color);
 }
 
 /* CONTAINER GERAL */
 .container {
   width: 100%;
   max-width: 414px; /* simulando celular */
-  background: white;
+  background: var(--color-background);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -64,7 +68,7 @@ body.fade-out {
   height: 60px;
   background-color: var(--color-header);
   color: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   transition: background 0.3s;
 }
 
@@ -120,7 +124,7 @@ body.fade-out {
   transition: box-shadow 0.3s, transform 0.2s;
 }
 .comp-aula:hover {
-  box-shadow: 0 6px 16px rgba(0,0,0,0.13);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.13);
   transform: translateY(-2px) scale(1.01);
 }
 
@@ -195,7 +199,7 @@ body.fade-out {
   gap: 12px;
 }
 .vaga-card:hover {
-  box-shadow: 0 6px 16px rgba(0,0,0,0.13);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.13);
   transform: translateY(-2px) scale(1.01);
 }
 
@@ -247,10 +251,15 @@ body.fade-out {
 }
 
 /* ========== TEMA ========== */
+.theme-menu-container {
+  position: relative;
+  display: inline-block;
+}
+
 .theme-menu {
   position: absolute;
-  top: 60px; /* logo abaixo do header */
-  right: 700px; /* alinhado ao botão de configurações */
+  top: 110%; /* logo abaixo do botão */
+  right: 0;
   background-color: white;
   border-radius: var(--border-radius-default);
   box-shadow: var(--shadow-default);
@@ -283,7 +292,7 @@ body.fade-out {
 
 .carousel {
   display: flex;
-  transition: transform 0.5s cubic-bezier(.4,1.4,.6,1);
+  transition: transform 0.5s cubic-bezier(0.4, 1.4, 0.6, 1);
   will-change: transform;
   height: 100%;
 }
@@ -304,7 +313,7 @@ body.fade-out {
   transition: box-shadow 0.3s, transform 0.2s;
 }
 .carousel .card:hover {
-  box-shadow: 0 6px 16px rgba(0,0,0,0.13);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.13);
   transform: translateY(-2px) scale(1.01);
 }
 .carousel .card img {
@@ -371,6 +380,14 @@ body.fade-out {
   right: 10px;
 }
 
+.vaga-detalhe-botoes {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 @media (max-width: 600px) {
   .container {
     max-width: 100vw;
@@ -387,8 +404,14 @@ body.fade-out {
     padding: 0 6px;
     height: 52px;
   }
-  .comp-aula, .vaga-card {
+  .comp-aula,
+  .vaga-card {
     padding: 10px;
+  }
+  .vaga-detalhe-botoes {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
   }
 }
 
@@ -402,9 +425,24 @@ body.fade-out {
 }
 
 .theme-dark .vaga-botao {
-  background-color: #222 !important;
-  color: #fff !important;
+  background-color: #e0e0e0 !important; /* Cinza clarinho para destaque no dark */
+  color: #222 !important;
+  box-shadow: 0 2px 8px rgba(160, 160, 160, 0.15);
 }
 .theme-dark .vaga-botao:hover {
+  background-color: #f5f5f5 !important;
+}
+
+/* Botões da tela de vagas (apenas na lista, não no detalhe) */
+.theme-dark #vagas-lista .vaga-botao {
+  background-color: #222 !important;
+  color: #fff !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.theme-dark #vagas-lista .vaga-botao:hover {
   background-color: #444 !important;
+}
+
+.theme-dark .main h2 {
+  color: #fff;
 }

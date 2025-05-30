@@ -103,22 +103,27 @@ function aplicarTemaSalvo() {
     container.classList.remove("theme-dark");
   }
   document.dispatchEvent(
-    new CustomEvent("themeChanged", { detail: { theme: savedTheme || "default" } })
+    new CustomEvent("themeChanged", {
+      detail: { theme: savedTheme || "default" },
+    })
   );
 }
 
 function changeTheme(theme) {
   const container = document.querySelector(".container");
-  if (theme === "dark") {
-    container.classList.add("theme-dark");
-  } else {
-    container.classList.remove("theme-dark");
-  }
-  // Salva o tema no localStorage
-  localStorage.setItem("selectedTheme", theme);
-  document.dispatchEvent(
-    new CustomEvent("themeChanged", { detail: { theme } })
-  );
+  document.body.classList.add("fade-out");
+  setTimeout(() => {
+    if (theme === "dark") {
+      container.classList.add("theme-dark");
+    } else {
+      container.classList.remove("theme-dark");
+    }
+    localStorage.setItem("selectedTheme", theme);
+    document.body.classList.remove("fade-out");
+    document.dispatchEvent(
+      new CustomEvent("themeChanged", { detail: { theme } })
+    );
+  }, 500);
 }
 
 /* ===============================
@@ -185,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function navegarComAnimacao(url) {
-  document.body.classList.add('fade-out');
+  document.body.classList.add("fade-out");
   setTimeout(() => {
     window.location.href = url;
   }, 500);
