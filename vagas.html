@@ -51,10 +51,16 @@
       <div class="vaga-card">
         <div class="vaga-info">
           <div class="vaga-titulo">${vaga.titulo}</div>
-          <div class="vaga-empresa">${vaga.empresa}</div>
-          <div class="vaga-tipo">${vaga.tipo}</div>
+          <div class="vaga-empresa"><span class="material-icons-outlined" style="font-size:16px;vertical-align:middle;color:#065CBE;">business</span> ${vaga.empresa}</div>
         </div>
-        <button class="vaga-botao" onclick="abrirModalDetalhes(${idx})">Ver detalhes</button>
+        <div class="vaga-botoes">
+          <button class="vaga-botao" onclick="window.location.href='vaga.html?id=${vaga.id}'">
+            <span class="material-icons-outlined">info</span> Ver detalhes
+          </button>
+          <button class="vaga-botao" onclick="alert('Candidatura confirmada! Boa sorte!')">
+            <span class="material-icons-outlined">how_to_reg</span> Candidatar
+          </button>
+        </div>
       </div>
     `
           )

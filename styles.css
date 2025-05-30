@@ -192,21 +192,25 @@ body.fade-out {
   padding: 16px;
   box-shadow: var(--shadow-default);
   transition: box-shadow 0.3s, transform 0.2s;
+  gap: 12px;
 }
 .vaga-card:hover {
   box-shadow: 0 6px 16px rgba(0,0,0,0.13);
   transform: translateY(-2px) scale(1.01);
 }
 
-.vaga-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.vaga-card .vaga-info {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .vaga-titulo {
   font-weight: bold;
   font-size: 16px;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .vaga-empresa,
@@ -216,13 +220,26 @@ body.fade-out {
 }
 
 .vaga-botao {
-  padding: 8px 12px;
+  padding: 6px 10px;
   border: none;
   background-color: var(--color-primary);
   color: white;
   border-radius: 4px;
   cursor: pointer;
   transition: background 0.2s, transform 0.2s;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 120px;
+  justify-content: center;
+  height: 32px;
+  margin-bottom: 5px;
+}
+.vaga-botao .material-icons-outlined {
+  font-size: 17px;
+  vertical-align: middle;
+  margin-right: 1px;
 }
 .vaga-botao:hover {
   background-color: #003e7e;
