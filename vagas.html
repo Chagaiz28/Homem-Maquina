@@ -32,11 +32,11 @@
       }
 
       function preencherFiltros(vagas) {
-        // Preenche os selects de tipo e curso
+        // Preenche os selects de tipo e empresa
         const tipoSelect = document.querySelectorAll('.vagas-filtros select')[0];
-        const cursoSelect = document.querySelectorAll('.vagas-filtros select')[1];
+        const empresaSelect = document.querySelectorAll('.vagas-filtros select')[1];
         tipoSelect.innerHTML = '<option value="">Tipo</option>' + [...new Set(vagas.map(v => v.tipo))].map(tipo => `<option value="${tipo}">${tipo}</option>`).join("");
-        cursoSelect.innerHTML = '<option value="">Curso</option>' + [...new Set(vagas.map(v => v.curso))].map(curso => `<option value="${curso}">${curso}</option>`).join("");
+        empresaSelect.innerHTML = '<option value="">Empresa</option>' + [...new Set(vagas.map(v => v.empresa))].map(empresa => `<option value="${empresa}">${empresa}</option>`).join("");
       }
 
       function renderizarVagas(vagas) {
@@ -64,12 +64,12 @@
       function aplicarFiltros() {
         const busca = document.querySelector('.vagas-filtros input').value.toLowerCase();
         const tipo = document.querySelectorAll('.vagas-filtros select')[0].value;
-        const curso = document.querySelectorAll('.vagas-filtros select')[1].value;
+        const empresa = document.querySelectorAll('.vagas-filtros select')[1].value;
         vagasFiltradas = vagasOriginais.filter(vaga => {
           const buscaOk = vaga.titulo.toLowerCase().includes(busca) || vaga.empresa.toLowerCase().includes(busca);
           const tipoOk = !tipo || vaga.tipo === tipo;
-          const cursoOk = !curso || vaga.curso === curso;
-          return buscaOk && tipoOk && cursoOk;
+          const empresaOk = !empresa || vaga.empresa === empresa;
+          return buscaOk && tipoOk && empresaOk;
         });
         renderizarVagas(vagasFiltradas);
       }
@@ -197,17 +197,9 @@
       <main class="main">
         <h2 style="text-align: center; margin-bottom: 16px">Vagas</h2>
         <div class="vagas-filtros">
-          <input type="text" placeholder="Buscar vagas..." />
-          <select>
-            <option>Tipo</option>
-            <option>Estágio</option>
-            <option>Emprego</option>
-          </select>
-          <select>
-            <option>Curso</option>
-            <option>Engenharia</option>
-            <option>Computação</option>
-          </select>
+          <input type="text" placeholder="Buscar vaga ou empresa..." />
+          <select></select>
+          <select></select>
         </div>
         <div id="vagas-lista"></div>
       </main>

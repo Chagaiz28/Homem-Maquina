@@ -379,3 +379,11 @@ body {
     height: 60px;
   }
 }
+
+.theme-dark .vaga-botao {
+  background-color: #222 !important;
+  color: #fff !important;
+}
+.theme-dark .vaga-botao:hover {
+  background-color: #444 !important;
+}
