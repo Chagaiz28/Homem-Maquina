@@ -32,6 +32,8 @@ body {
   justify-content: center;
   font-family: var(--font-family);
   color: var(--color-text);
+  min-height: 100vh;
+  transition: background 0.3s;
 }
 .mensagens p{
   margin-left: 10px;
@@ -45,6 +47,8 @@ body {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  margin: 0 auto;
+  transition: box-shadow 0.3s;
 }
 
 /* ========== HEADER ========== */
@@ -56,6 +60,8 @@ body {
   height: 60px;
   background-color: var(--color-header);
   color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: background 0.3s;
 }
 
 .header-side {
@@ -72,12 +78,18 @@ body {
   justify-content: center;
   align-items: center;
   fill: #ffffff;
+  transition: fill 0.3s;
 }
 
 .header .material-icons-outlined.icon {
   cursor: pointer;
   margin-left: 16px;
   color: var(--color-icon);
+  transition: color 0.3s, transform 0.2s;
+}
+.header .material-icons-outlined.icon:hover {
+  transform: scale(1.15) rotate(-8deg);
+  filter: brightness(1.2);
 }
 
 #vagasBtn {
@@ -87,6 +99,10 @@ body {
   font-size: 14px;
   cursor: pointer;
   margin-left: 16px;
+  transition: color 0.3s;
+}
+#vagasBtn:hover {
+  color: #e0e0e0;
 }
 
 /* ========== AULAS COMPONENT ========== */
@@ -97,6 +113,11 @@ body {
   border-radius: var(--border-radius-default);
   background-color: var(--color-main);
   box-shadow: var(--shadow-default);
+  transition: box-shadow 0.3s, transform 0.2s;
+}
+.comp-aula:hover {
+  box-shadow: 0 6px 16px rgba(0,0,0,0.13);
+  transform: translateY(-2px) scale(1.01);
 }
 
 .titulo_aula {
@@ -166,6 +187,11 @@ body {
   border-radius: var(--border-radius-default);
   padding: 16px;
   box-shadow: var(--shadow-default);
+  transition: box-shadow 0.3s, transform 0.2s;
+}
+.vaga-card:hover {
+  box-shadow: 0 6px 16px rgba(0,0,0,0.13);
+  transform: translateY(-2px) scale(1.01);
 }
 
 .vaga-info {
@@ -192,6 +218,11 @@ body {
   color: white;
   border-radius: 4px;
   cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.vaga-botao:hover {
+  background-color: #003e7e;
+  transform: scale(1.07);
 }
 
 /* ========== TEMA ========== */
@@ -231,11 +262,10 @@ body {
 
 .carousel {
   display: flex;
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.5s cubic-bezier(.4,1.4,.6,1);
   will-change: transform;
   height: 100%;
 }
-
 .carousel .card {
   flex: 0 0 100%;
   max-width: 100%;
@@ -250,14 +280,22 @@ body {
   box-shadow: var(--shadow-default);
   margin-right: 0;
   overflow: hidden;
+  transition: box-shadow 0.3s, transform 0.2s;
 }
-
+.carousel .card:hover {
+  box-shadow: 0 6px 16px rgba(0,0,0,0.13);
+  transform: translateY(-2px) scale(1.01);
+}
 .carousel .card img {
   width: 100%;
-  height: 120px;
+  height: 150px;
   object-fit: cover;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
+  transition: filter 0.3s;
+}
+.carousel .card img:hover {
+  filter: brightness(1.08) saturate(1.1);
 }
 
 .carousel .info {
@@ -310,4 +348,34 @@ body {
 }
 .carousel-container #nextBtn {
   right: 10px;
+}
+
+@media (max-width: 600px) {
+  .container {
+    max-width: 100vw;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .carousel-container {
+    height: 200px;
+  }
+  .carousel .card img {
+    height: 90px;
+  }
+  .header {
+    padding: 0 6px;
+    height: 52px;
+  }
+  .comp-aula, .vaga-card {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 400px) {
+  .carousel-container {
+    height: 140px;
+  }
+  .carousel .card img {
+    height: 60px;
+  }
 }

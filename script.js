@@ -94,6 +94,19 @@ function toggleThemeMenu() {
   menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
+function aplicarTemaSalvo() {
+  const savedTheme = localStorage.getItem("selectedTheme");
+  const container = document.querySelector(".container");
+  if (savedTheme === "dark") {
+    container.classList.add("theme-dark");
+  } else {
+    container.classList.remove("theme-dark");
+  }
+  document.dispatchEvent(
+    new CustomEvent("themeChanged", { detail: { theme: savedTheme || "default" } })
+  );
+}
+
 function changeTheme(theme) {
   const container = document.querySelector(".container");
   if (theme === "dark") {
@@ -117,11 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Ajusta a posição inicial do carrossel
   updateCarousel();
 
-  // Restaura o tema salvo (se houver)
-  const savedTheme = localStorage.getItem("selectedTheme");
-  if (savedTheme) {
-    changeTheme(savedTheme);
-  }
+  aplicarTemaSalvo();
 
   // Botão Próximo
   document.getElementById("nextBtn").addEventListener("click", () => {

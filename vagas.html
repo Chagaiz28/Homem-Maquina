@@ -114,6 +114,17 @@
         document.querySelector('.vagas-filtros input').addEventListener('input', aplicarFiltros);
         document.querySelectorAll('.vagas-filtros select')[0].addEventListener('change', aplicarFiltros);
         document.querySelectorAll('.vagas-filtros select')[1].addEventListener('change', aplicarFiltros);
+        // Aplica o tema salvo ao carregar a página de vagas
+        const savedTheme = localStorage.getItem("selectedTheme");
+        const container = document.querySelector(".container");
+        if (savedTheme === "dark") {
+          container.classList.add("theme-dark");
+        } else {
+          container.classList.remove("theme-dark");
+        }
+        document.dispatchEvent(
+          new CustomEvent("themeChanged", { detail: { theme: savedTheme || "default" } })
+        );
       });
     </script>
     <style>
