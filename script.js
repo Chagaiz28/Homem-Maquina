@@ -61,16 +61,17 @@ function loadEvents() {
     const card = document.createElement("div");
     card.className = "card";
     card.innerHTML = `
-        <img src="${event.image}" alt="${event.title}">
-        <div class="info">
-          <h3>${event.title}</h3>
-          <p>${event.description}</p>
-          <p>
-            <span class="material-icons-outlined icon">event</span> ${event.date} às ${event.time}
-            <span class="material-icons-outlined icon">pin_drop</span> ${event.location}
-          </p>
+      <img src="${event.image}" alt="${event.title}">
+      <div class="info">
+        <h3>${event.title}</h3>
+        <div class="carousel-meta">
+          <span class="material-icons-outlined carousel-meta-icon">pin_drop</span>
+          <span class="carousel-meta-text">${event.location}</span>
+          <span class="material-icons-outlined carousel-meta-icon">schedule</span>
+          <span class="carousel-meta-text">${event.time}</span>
         </div>
-      `;
+      </div>
+    `;
     carousel.appendChild(card);
   });
 }
@@ -91,6 +92,19 @@ function updateCarousel() {
 function toggleThemeMenu() {
   const menu = document.getElementById("themeMenu");
   menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+function aplicarTemaSalvo() {
+  const savedTheme = localStorage.getItem("selectedTheme");
+  const container = document.querySelector(".container");
+  if (savedTheme === "dark") {
+    container.classList.add("theme-dark");
+  } else {
+    container.classList.remove("theme-dark");
+  }
+  document.dispatchEvent(
+    new CustomEvent("themeChanged", { detail: { theme: savedTheme || "default" } })
+  );
 }
 
 function changeTheme(theme) {
@@ -116,11 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Ajusta a posição inicial do carrossel
   updateCarousel();
 
-  // Restaura o tema salvo (se houver)
-  const savedTheme = localStorage.getItem("selectedTheme");
-  if (savedTheme) {
-    changeTheme(savedTheme);
-  }
+  aplicarTemaSalvo();
 
   // Botão Próximo
   document.getElementById("nextBtn").addEventListener("click", () => {
@@ -173,3 +183,10 @@ document
 document.addEventListener("DOMContentLoaded", () => {
   startAutoSlide();
 });
+
+function navegarComAnimacao(url) {
+  document.body.classList.add('fade-out');
+  setTimeout(() => {
+    window.location.href = url;
+  }, 500);
+}
