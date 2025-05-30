@@ -183,3 +183,10 @@ document
 document.addEventListener("DOMContentLoaded", () => {
   startAutoSlide();
 });
+
+function navegarComAnimacao(url) {
+  document.body.classList.add('fade-out');
+  setTimeout(() => {
+    window.location.href = url;
+  }, 500);
+}
