@@ -64,11 +64,12 @@ function loadEvents() {
       <img src="${event.image}" alt="${event.title}">
       <div class="info">
         <h3>${event.title}</h3>
-        <p>${event.description}</p>
-        <p>
-          <span class="material-icons-outlined icon">event</span> ${event.date} às ${event.time}
-          <span class="material-icons-outlined icon">pin_drop</span> ${event.location}
-        </p>
+        <div class="carousel-meta">
+          <span class="material-icons-outlined carousel-meta-icon">pin_drop</span>
+          <span class="carousel-meta-text">${event.location}</span>
+          <span class="material-icons-outlined carousel-meta-icon">schedule</span>
+          <span class="carousel-meta-text">${event.time}</span>
+        </div>
       </div>
     `;
     carousel.appendChild(card);
