@@ -60,21 +60,21 @@
         container.innerHTML = vagas
           .map(
             (vaga, idx) => `
-      <div class="vaga-card">
-        <div class="vaga-info">
-          <div class="vaga-titulo">${vaga.titulo}</div>
-          <div class="vaga-empresa"><span class="material-icons-outlined" style="font-size:16px;vertical-align:middle;color:#065CBE;">business</span> ${vaga.empresa}</div>
-        </div>
-        <div class="vaga-botoes">
-          <button class="vaga-botao" onclick="window.location.href='vaga.html?id=${vaga.id}'">
-            <span class="material-icons-outlined">info</span> Ver detalhes
-          </button>
-          <button class="vaga-botao" onclick="alert('Candidatura confirmada! Boa sorte!')">
-            <span class="material-icons-outlined">how_to_reg</span> Candidatar
-          </button>
-        </div>
-      </div>
-    `
+  <div class="vaga-card">
+    <div class="vaga-info">
+      <div class="vaga-titulo">${vaga.titulo}</div>
+      <div class="vaga-empresa"><span class="material-icons-outlined" style="font-size:16px;vertical-align:middle;color:#065CBE;">business</span> ${vaga.empresa}</div>
+    </div>
+    <div class="vaga-botoes">
+      <button class="vaga-botao" onclick="window.location.href='vaga.html?id=${vaga.id}'">
+        <span class="material-icons-outlined">info</span> Ver detalhes
+      </button>
+      <button class="vaga-botao" onclick="abrirModalCandidatura(${vaga.id})">
+        <span class="material-icons-outlined">how_to_reg</span> Candidatar
+      </button>
+    </div>
+  </div>
+`
           )
           .join("");
       }
@@ -98,38 +98,47 @@
         renderizarVagas(vagasFiltradas);
       }
 
-      // Modal de detalhes
-      function abrirModalDetalhes(idx) {
-        const vaga = vagasFiltradas[idx];
-        let modal = document.getElementById("modalDetalhes");
+      // Modal de candidatura
+      function abrirModalCandidatura(vagaId) {
+        let modal = document.getElementById("modalCandidatura");
         if (!modal) {
           modal = document.createElement("div");
-          modal.id = "modalDetalhes";
+          modal.id = "modalCandidatura";
           modal.innerHTML = `
-            <div class="modal-bg"></div>
-            <div class="modal-content">
-              <button class="modal-close" onclick="fecharModalDetalhes()">&times;</button>
-              <h3 id="modalTitulo"></h3>
-              <p><b>Empresa:</b> <span id="modalEmpresa"></span></p>
-              <p><b>Tipo:</b> <span id="modalTipo"></span></p>
-              <p><b>Curso:</b> <span id="modalCurso"></span></p>
-              <p><b>Descrição:</b> <span id="modalDescricao"></span></p>
-              <p><b>Requisitos:</b> <span id="modalRequisitos"></span></p>
-            </div>
-          `;
+      <div class="modal-bg"></div>
+      <div class="modal-content">
+        <button class="modal-close" onclick="fecharModalCandidatura()">&times;</button>
+        <h3>Enviar Currículo</h3>
+        <form id="formCandidatura">
+          <input type="file" id="curriculoInput" accept=".pdf,.doc,.docx" required style="margin-bottom:12px" />
+          <button type="submit" class="vaga-botao" style="width:100%"><span class="material-icons-outlined">upload_file</span> Enviar</button>
+        </form>
+        <div id="candidaturaMsg" style="margin-top:10px;color:green;display:none">Currículo enviado com sucesso!</div>
+      </div>
+    `;
           document.body.appendChild(modal);
+          document.getElementById("formCandidatura").onsubmit = function(e) {
+            e.preventDefault();
+            const input = document.getElementById("curriculoInput");
+            if (input.files.length) {
+              document.getElementById("candidaturaMsg").style.display = "block";
+              setTimeout(() => fecharModalCandidatura(), 1500);
+            }
+          };
+        } else {
+          document.getElementById("candidaturaMsg").style.display = "none";
+          document.getElementById("curriculoInput").value = "";
         }
-        document.getElementById("modalTitulo").innerText = vaga.titulo;
-        document.getElementById("modalEmpresa").innerText = vaga.empresa;
-        document.getElementById("modalTipo").innerText = vaga.tipo;
-        document.getElementById("modalCurso").innerText = vaga.curso;
-        document.getElementById("modalDescricao").innerText = vaga.descricao;
-        document.getElementById("modalRequisitos").innerText = vaga.requisitos;
         modal.style.display = "flex";
+        // Força reflow e adiciona classe para animar
+        setTimeout(() => { modal.classList.add('show'); }, 10);
       }
-      function fecharModalDetalhes() {
-        const modal = document.getElementById("modalDetalhes");
-        if (modal) modal.style.display = "none";
+      function fecharModalCandidatura() {
+        const modal = document.getElementById("modalCandidatura");
+        if (modal) {
+          modal.classList.remove('show');
+          setTimeout(() => { modal.style.display = "none"; }, 250);
+        }
       }
 
       document.addEventListener("DOMContentLoaded", () => {
@@ -160,7 +169,7 @@
       });
     </script>
     <style>
-      #modalDetalhes {
+      #modalCandidatura {
         position: fixed;
         top: 0;
         left: 0;
@@ -171,7 +180,7 @@
         justify-content: center;
         z-index: 1000;
       }
-      #modalDetalhes .modal-bg {
+      #modalCandidatura .modal-bg {
         position: absolute;
         top: 0;
         left: 0;
@@ -179,7 +188,7 @@
         bottom: 0;
         background: rgba(0, 0, 0, 0.5);
       }
-      #modalDetalhes .modal-content {
+      #modalCandidatura .modal-content {
         position: relative;
         background: #fff;
         border-radius: 8px;
@@ -188,8 +197,15 @@
         max-width: 90vw;
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
         z-index: 2;
+        opacity: 0;
+        transform: scale(0.96);
+        transition: opacity 0.25s cubic-bezier(.4,0,.2,1), transform 0.25s cubic-bezier(.4,0,.2,1);
       }
-      #modalDetalhes .modal-close {
+      #modalCandidatura.show .modal-content {
+        opacity: 1;
+        transform: scale(1);
+      }
+      #modalCandidatura .modal-close {
         position: absolute;
         top: 8px;
         right: 8px;

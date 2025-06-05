@@ -39,6 +39,46 @@
             "<p>Erro ao carregar vaga.</p>";
         }
       });
+      function abrirModalCandidatura() {
+        let modal = document.getElementById("modalCandidatura");
+        if (!modal) {
+          modal = document.createElement("div");
+          modal.id = "modalCandidatura";
+          modal.innerHTML = `
+            <div class="modal-bg"></div>
+            <div class="modal-content">
+              <button class="modal-close" onclick="fecharModalCandidatura()">&times;</button>
+              <h3>Enviar Currículo</h3>
+              <form id="formCandidatura">
+                <input type="file" id="curriculoInput" accept=".pdf,.doc,.docx" required style="margin-bottom:12px" />
+                <button type="submit" class="vaga-botao" style="width:100%"><span class="material-icons-outlined">upload_file</span> Enviar</button>
+              </form>
+              <div id="candidaturaMsg" style="margin-top:10px;color:green;display:none">Currículo enviado com sucesso!</div>
+            </div>
+          `;
+          document.body.appendChild(modal);
+          document.getElementById("formCandidatura").onsubmit = function(e) {
+            e.preventDefault();
+            const input = document.getElementById("curriculoInput");
+            if (input.files.length) {
+              document.getElementById("candidaturaMsg").style.display = "block";
+              setTimeout(() => fecharModalCandidatura(), 1500);
+            }
+          };
+        } else {
+          document.getElementById("candidaturaMsg").style.display = "none";
+          document.getElementById("curriculoInput").value = "";
+        }
+        modal.style.display = "flex";
+        setTimeout(() => { modal.classList.add('show'); }, 10);
+      }
+      function fecharModalCandidatura() {
+        const modal = document.getElementById("modalCandidatura");
+        if (modal) {
+          modal.classList.remove('show');
+          setTimeout(() => { modal.style.display = "none"; }, 250);
+        }
+      }
       function renderVaga(vaga) {
         document.getElementById("vaga-detalhe").innerHTML = `
           <div class="vaga-detalhe-card">
@@ -62,7 +102,7 @@
                 <span class="material-icons-outlined">arrow_back</span>
                 Voltar
               </button>
-              <button class="vaga-botao" onclick="confirmarCandidatura()">
+              <button class="vaga-botao" onclick="abrirModalCandidatura()">
                 <span class="material-icons-outlined">how_to_reg</span>
                 Candidatar-se
               </button>
@@ -176,6 +216,64 @@
       }
       .theme-dark .vaga-detalhe-icon {
         color: #fff;
+      }
+      /* Modal candidatura igual vagas.html */
+      #modalCandidatura {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+      #modalCandidatura .modal-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+      }
+      #modalCandidatura .modal-content {
+        position: relative;
+        background: #fff;
+        border-radius: 8px;
+        padding: 24px 20px 16px 20px;
+        min-width: 280px;
+        max-width: 90vw;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        z-index: 2;
+        opacity: 0;
+        transform: scale(0.96);
+        transition: opacity 0.25s cubic-bezier(.4,0,.2,1), transform 0.25s cubic-bezier(.4,0,.2,1);
+      }
+      #modalCandidatura.show .modal-content {
+        opacity: 1;
+        transform: scale(1);
+      }
+      #modalCandidatura .modal-close {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+      }
+      .modal-close:hover {
+        color: #065cbe;
+      }
+      @media (max-width: 600px) {
+        .modal-content {
+          padding: 16px;
+        }
+        .modal-close {
+          top: 12px;
+          right: 12px;
+        }
       }
     </style>
   </head>
