@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "titulo": "Estágio em Desenvolvimento Web",
+    "empresa": "Inatel",
+    "tipo": "Estágio",
+    "curso": "Engenharia",
+    "descricao": "Atue no desenvolvimento de aplicações web utilizando JavaScript e frameworks modernos.",
+    "requisitos": "Conhecimento em HTML, CSS, JS."
+  },
+  {
+    "id": 2,
+    "titulo": "Analista de Suporte Jr.",
+    "empresa": "Tech Solutions",
+    "tipo": "Emprego",
+    "curso": "Computação",
+    "descricao": "Suporte técnico a usuários e manutenção de sistemas internos.",
+    "requisitos": "Boa comunicação, noções de redes."
+  },
+  {
+    "id": 3,
+    "titulo": "Estágio em IoT",
+    "empresa": "Inatel",
+    "tipo": "Estágio",
+    "curso": "Engenharia",
+    "descricao": "Desenvolvimento de soluções para Internet das Coisas.",
+    "requisitos": "C/C++, eletrônica básica."
+  }
+]

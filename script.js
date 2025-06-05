@@ -61,16 +61,17 @@ function loadEvents() {
     const card = document.createElement("div");
     card.className = "card";
     card.innerHTML = `
-        <img src="${event.image}" alt="${event.title}">
-        <div class="info">
-          <h3>${event.title}</h3>
-          <p>${event.description}</p>
-          <p>
-            <span class="material-icons-outlined icon">event</span> ${event.date} às ${event.time}
-            <span class="material-icons-outlined icon">pin_drop</span> ${event.location}
-          </p>
+      <img src="${event.image}" alt="${event.title}">
+      <div class="info">
+        <h3>${event.title}</h3>
+        <div class="carousel-meta">
+          <span class="material-icons-outlined carousel-meta-icon">pin_drop</span>
+          <span class="carousel-meta-text">${event.location}</span>
+          <span class="material-icons-outlined carousel-meta-icon">schedule</span>
+          <span class="carousel-meta-text">${event.time}</span>
         </div>
-      `;
+      </div>
+    `;
     carousel.appendChild(card);
   });
 }
@@ -93,18 +94,36 @@ function toggleThemeMenu() {
   menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
-function changeTheme(theme) {
+function aplicarTemaSalvo() {
+  const savedTheme = localStorage.getItem("selectedTheme");
   const container = document.querySelector(".container");
-  if (theme === "dark") {
+  if (savedTheme === "dark") {
     container.classList.add("theme-dark");
   } else {
     container.classList.remove("theme-dark");
   }
-  // Salva o tema no localStorage
-  localStorage.setItem("selectedTheme", theme);
   document.dispatchEvent(
-    new CustomEvent("themeChanged", { detail: { theme } })
+    new CustomEvent("themeChanged", {
+      detail: { theme: savedTheme || "default" },
+    })
   );
+}
+
+function changeTheme(theme) {
+  const container = document.querySelector(".container");
+  document.body.classList.add("fade-out");
+  setTimeout(() => {
+    if (theme === "dark") {
+      container.classList.add("theme-dark");
+    } else {
+      container.classList.remove("theme-dark");
+    }
+    localStorage.setItem("selectedTheme", theme);
+    document.body.classList.remove("fade-out");
+    document.dispatchEvent(
+      new CustomEvent("themeChanged", { detail: { theme } })
+    );
+  }, 500);
 }
 
 /* ===============================
@@ -116,11 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Ajusta a posição inicial do carrossel
   updateCarousel();
 
-  // Restaura o tema salvo (se houver)
-  const savedTheme = localStorage.getItem("selectedTheme");
-  if (savedTheme) {
-    changeTheme(savedTheme);
-  }
+  aplicarTemaSalvo();
 
   // Botão Próximo
   document.getElementById("nextBtn").addEventListener("click", () => {
@@ -173,3 +188,10 @@ document
 document.addEventListener("DOMContentLoaded", () => {
   startAutoSlide();
 });
+
+function navegarComAnimacao(url) {
+  document.body.classList.add("fade-out");
+  setTimeout(() => {
+    window.location.href = url;
+  }, 500);
+}
